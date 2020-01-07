@@ -8,6 +8,7 @@ import {
   Link
 } from "react-router-dom";
 import Books from './Components/Books.js'
+import Authors from './Components/Authors.js'
 
 
 
@@ -17,9 +18,11 @@ export class App extends Component {
     return (
       <Router>
          <Link to="/"> HOME </Link>
-        <Link to="/books">Books</Link>
+        <Link to="/books">BOOKS</Link>
+        <Link to="/authors">AUTHORS</Link>
         <Switch>
           <Route path="/books"> <Books/> </Route>
+          <Route path="/authors"> <Authors/> </Route> 
           <Route path="/"></Route>
         </Switch>
       </Router>
