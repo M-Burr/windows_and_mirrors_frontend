@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import Book from './Book.js';
 import axios from 'axios';
+import { Row } from 'react-bootstrap'
 
 class Books extends Component {
   constructor(props) {
@@ -20,12 +21,9 @@ class Books extends Component {
       this.setState({
         bookList: response.data
       });
-      console.log(response.data)
-
     })
     .catch((error) => {
       this.setState({error: error.message});
-      console.log(error.message)
     });
   }
 
@@ -36,9 +34,9 @@ class Books extends Component {
       )
     })
     return (
-      <div>
+      <Row>
         {allBooks}
-      </div>
+      </Row>
     )
   }
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Row } from 'react-bootstrap';
 import Author from './Author.js';
 import axios from 'axios';
 
@@ -31,13 +32,13 @@ class Authors extends Component {
   render () {
     let allAuthors = this.state.authorList.map((author, i) => {
       return (
-        <Author key={i} id={author.id} name={author.name} averageRating={author.avgRating} />
+        <Author key={i} id={author.id} name={author.name} averageRating={author.avgRating}/>
       )
     })
     return (
-      <div>
+      <Row>
         {allAuthors}
-      </div>
+      </Row>
     )
   }
   

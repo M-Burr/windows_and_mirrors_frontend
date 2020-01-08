@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types';
+import { Card } from 'react-bootstrap'
 
 class Author extends Component{
   constructor(props) {
@@ -14,10 +15,12 @@ class Author extends Component{
 
   render() {
     return (
-      <section>
-        <h1>Name: {this.props.name}</h1>
-        <p>Average Rating: {this.props.averageRating}</p>
-      </section>
+      <Card style={{width: "25%"}}>
+        <Card.Body>
+          <Card.Title>Name: {this.props.name}</Card.Title>
+          <Card.Text>Average Rating: {this.props.averageRating}</Card.Text>
+        </Card.Body> 
+      </Card>
     )
   }
 }
