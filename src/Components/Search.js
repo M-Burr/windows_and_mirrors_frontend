@@ -40,7 +40,7 @@ class Search extends Component {
   onSearch = () => {
     //send QP to back end
     const searchTerms = this.state.tags.join(',')
-    const completedsearch = 'http://localhost:8080/complete-search'
+    const completedsearch = 'http://localhost:8080/api/complete-search'
     axios.get(completedsearch, {params: {identifier: searchTerms}}).then((response) => {
       this.setState({
         response: response.data
