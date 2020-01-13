@@ -28,9 +28,9 @@ class Books extends Component {
   }
 
   render () {
-    let allBooks = this.state.bookList.map((book, i) => {
+    const allBooks = this.state.bookList.map((book, i) => {
       return (
-        <Book key={i} id={book.id} title={book.title} authors={book.authors} isbn10={book.isbn10} isbn13={book.isbn13} genre={book.genre} startAge={book.startAge} endAge={book.endAge} startGrade={book.startGrade} endGrade={book.endGrade} summary={book.summary}/>
+        <Book key={i} id={book.id} title={book.title} authors={book.authors} tags={book.tags} isbn10={book.isbn10} isbn13={book.isbn13} genre={book.genre} startAge={book.startAge} endAge={book.endAge} startGrade={book.startGrade} endGrade={book.endGrade} summary={book.summary}/>
       )
     })
     return (

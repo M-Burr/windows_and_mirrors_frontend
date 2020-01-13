@@ -7,9 +7,13 @@ export class Book extends Component {
 
 
   render(){
-    const bookAuthors = this.props.authors.map((author, i) => {
+    const bookAuthors = this.props.authors.map((author) => {
       return author.name
-    }).join(', ');
+    }).join(',  ');
+
+    const tags = this.props.tags.map((tag) => {
+      return tag.identifier
+    }).join(',');
     return (
       <Card style={{width: "25%"}}>
         <Card.Body>
@@ -18,6 +22,7 @@ export class Book extends Component {
           </Card.Title>
           <Card.Img variant="top" src="https://m.media-amazon.com/images/I/91TjCYwmjRL._AC_UY436_FMwebp_QL65_.jpg" />
           <Card.Text>By: {bookAuthors}</Card.Text>
+          <Card.Text>Tags: {tags} </Card.Text>
           <Card.Text>Genre:{this.props.genre}</Card.Text>
           <Card.Text>ISBN 10: {this.props.isbn10}</Card.Text>
           <Card.Text>ISBN 13: {this.props.isbn13}</Card.Text>

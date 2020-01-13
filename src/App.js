@@ -11,6 +11,7 @@ import {
 import Books from './Components/Books.js'
 import BookDetails from './Components/BookDetails.js'
 import Authors from './Components/Authors.js'
+import Search from './Components/Search.js'
 import diverse_classroom from './Components/Images/diverse_classroom.jpg'
 import children_reading from './Components/Images/children_reading.jpg'
 import './App.css';
@@ -37,7 +38,7 @@ export class App extends Component {
             <Route path="/books/:id" component={BookDetails} />
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
-            <Route path="/search"></Route>
+            <Route path="/search"> <Search/> </Route>
             <Route path="/">
               <Carousel>
                 <Carousel.Item className="carousel_picture">
