@@ -14,7 +14,7 @@ class Authors extends Component {
   }
 
   componentDidMount() {
-    const authors = 'http://localhost:8080/api/authors'
+    const authors = '/api/authors'
     axios.get(authors).then((response) => {
       
       this.setState({

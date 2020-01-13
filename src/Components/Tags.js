@@ -14,7 +14,7 @@ class Tags extends Component {
   }
 
   componentDidMount() {
-    const tags = 'http://localhost:8080/api/searchcriteria'
+    const tags = '/api/searchcriteria'
     axios.get(tags).then((response) => {
       
       this.setState({

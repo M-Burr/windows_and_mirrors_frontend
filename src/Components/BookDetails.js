@@ -14,7 +14,7 @@ export class BookDetails extends Component {
   }
 
 componentDidMount(){
-  const bookDetails = `http://localhost:8080/api/books/${this.props.match.params.id}`
+  const bookDetails = `/api/books/${this.props.match.params.id}`
   axios.get(bookDetails).then((response) =>{
     this.setState({
       book: response.data
