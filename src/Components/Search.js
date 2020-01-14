@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Tags from './Tags.js';
-import Tag from './Tag.js'
+import Ages from './Ages.js';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import Book from './Book.js';
@@ -11,13 +11,14 @@ class Search extends Component {
 
     this.state = {
       tags: [], 
+      ages: [],
       response: [],
       error: ''
     }
 
   }
   
-  onSelection = (identifier, nextState) => {
+  onIdentifierSelection = (identifier, nextState) => {
     const normalizedTag = identifier.toLowerCase();
     if (nextState) {
       // add tag to state
@@ -27,9 +28,10 @@ class Search extends Component {
     } else {
       // remove tag from state
       const tags = this.state.tags;
-      const index = tags.indexOf(normalizedTag);
-      if (index > -1) {
-        tags.splice(index, 1);
+      const tagsIndex = tags.indexOf(normalizedTag);
+      
+      if (tagsIndex > -1) {
+        tags.splice(tagsIndex, 1);
       }
       this.setState({
         tags: tags
@@ -37,11 +39,31 @@ class Search extends Component {
     }
   }
 
+  onAgesSelection = (age, nextState) => {
+    if (nextState){
+      this.setState({
+        ages: this.state.ages.concat(age)
+      });
+    } else {
+      const ages = this.state.ages;
+      const agesIndex = ages.indexOf(age);
+
+      if (agesIndex > -1){
+        ages.splice(agesIndex, 1);
+      }
+      this.setState({
+        ages: ages
+      })
+    }
+  }
+
+
   onSearch = () => {
     //send QP to back end
-    const searchTerms = this.state.tags.join(',')
+    const searchIdentifiers = this.state.tags.join(',')
+    const searchAges = this.state.ages.join(',')
     const completedsearch = '/api/complete-search'
-    axios.get(completedsearch, {params: {identifier: searchTerms}}).then((response) => {
+    axios.get(completedsearch, {params: {identifier: searchIdentifiers, ages: searchAges}}).then((response) => {
       this.setState({
         response: response.data
       });
@@ -54,10 +76,14 @@ class Search extends Component {
   render(){
     const filteredResults = this.state.response.map((book, i) => {
       return <Book key={i} id={book.id} title={book.title} authors={book.authors} img={book.img} tags={book.tags} genre={book.genre} isbn10={book.isbn10} isbn13={book.isbn13} startAge={book.startAge} endAge={book.endAge} startGrade={book.startGrade} endGrade={book.endGrade} summary={book.summary} />
-    })
+    });
+
+    
     return(
       <>
-      <Tags selected={this.state.tags} onSelection={this.onSelection} />
+      <p>Choose Ages: <Ages selected={this.state.ages} onAgesSelection={this.onAgesSelection} /> </p>
+      <p>Please Choose Identifiers: 
+        <Tags selected={this.state.tags} onSelection={this.onIdentifierSelection} /></p>
       <Button variant="primary" onClick={this.onSearch}>Search</Button>
       { this.state.response && filteredResults }
       </>
