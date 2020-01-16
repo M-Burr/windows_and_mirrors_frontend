@@ -13,6 +13,7 @@ import Books from './Components/Books.js'
 import BookDetails from './Components/BookDetails.js'
 import Authors from './Components/Authors.js'
 import Search from './Components/Search.js'
+import AddBookForm from './Components/AddBookForm'
 import diverse_classroom from './Components/Images/diverse_classroom.jpg'
 import children_reading from './Components/Images/children_reading.jpg'
 import './App.css';
@@ -23,12 +24,22 @@ import Axios from 'axios';
 
 
 export class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      user: {},
+      error: ''
+    }
+  }
 
 
   responseGoogle = (response) =>{
     console.log(response)
     Axios.post("/api/login", {userToken: response.getAuthResponse().id_token}).then((response) =>{
-      console.log("Successful login!", response)
+      this.setState({
+        user: response.data
+      })
     }).catch((error) =>{
       console.log("You failed!", error.message)
     })
@@ -42,6 +53,7 @@ export class App extends Component {
 
    
   render() {
+    const user = this.state.user
     return (
       <Router>
         <Navbar expand="lg">
@@ -57,11 +69,14 @@ export class App extends Component {
            onFailure={this.responseGoogleFailure}
            cookiePolicy={'single_host_origin'}
            />
+           {user.email && <Link to="/add">ADD BOOK</Link>}
           </Navbar.Brand>
         </Navbar>
         <section>
           <Switch>
             <Route path="/books/:id" component={BookDetails} />
+            <Route path="/add"> <AddBookForm/> </Route>
+            <Route />
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
             <Route path="/search"> <Search/> </Route>

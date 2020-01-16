@@ -15,12 +15,12 @@ export class Book extends Component {
       return tag.identifier
     }).join(',');
     return (
-      <Card style={{width: "25%"}}>
+      <Card style={{width: "15%"}}>
         <Card.Body>
           <Card.Title>
             <Link to={`/books/${this.props.id}`}>{this.props.title}</Link>
           </Card.Title>
-          <Card.Img variant="top" src="https://m.media-amazon.com/images/I/91TjCYwmjRL._AC_UY436_FMwebp_QL65_.jpg" />
+          <Card.Img variant="top" src={this.props.bookCover} />
           <Card.Text>By: {bookAuthors}</Card.Text>
           <Card.Text>Tags: {tags} </Card.Text>
           <Card.Text>Genre:{this.props.genre}</Card.Text>

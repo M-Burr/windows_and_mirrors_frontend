@@ -75,7 +75,7 @@ class Search extends Component {
 
   render(){
     const filteredResults = this.state.response.map((book, i) => {
-      return <Book key={i} id={book.id} title={book.title} authors={book.authors} img={book.img} tags={book.tags} genre={book.genre} isbn10={book.isbn10} isbn13={book.isbn13} startAge={book.startAge} endAge={book.endAge} startGrade={book.startGrade} endGrade={book.endGrade} summary={book.summary} />
+      return <Book key={i} id={book.id} title={book.title} authors={book.authors} bookCover={book.bookCover} tags={book.tags} genre={book.genre} isbn10={book.isbn10} isbn13={book.isbn13} startAge={book.startAge} endAge={book.endAge} startGrade={book.startGrade} endGrade={book.endGrade} summary={book.summary} />
     });
 
     
