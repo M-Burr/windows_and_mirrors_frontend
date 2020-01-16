@@ -76,7 +76,6 @@ export class App extends Component {
           <Switch>
             <Route path="/books/:id" component={BookDetails} />
             <Route path="/add"> <AddBookForm/> </Route>
-            <Route />
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
             <Route path="/search"> <Search/> </Route>
