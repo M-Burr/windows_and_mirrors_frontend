@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import logo from './logo.svg';
 import './App.css';
 import {
@@ -17,7 +17,7 @@ import SearchBookForm from './Components/SearchBookForm'
 import diverse_classroom from './Components/Images/diverse_classroom.jpg'
 import children_reading from './Components/Images/children_reading.jpg'
 import './App.css';
-
+import Cookies from 'js-cookie'
 import {Navbar} from 'react-bootstrap';
 import { Carousel } from 'react-bootstrap'
 import Axios from 'axios';
@@ -27,8 +27,9 @@ export class App extends Component {
   constructor(props){
     super(props);
 
+    const user = JSON.parse(Cookies.get("user") || "{}")
     this.state = {
-      user: {},
+      user: user,
       error: ''
     }
   }
@@ -37,6 +38,7 @@ export class App extends Component {
   responseGoogle = (response) =>{
     console.log(response)
     Axios.post("/api/login", {userToken: response.getAuthResponse().id_token}).then((response) =>{
+      Cookies.set("user", JSON.stringify(response.data), {expires: 2})
       this.setState({
         user: response.data
       })
@@ -50,6 +52,10 @@ export class App extends Component {
     console.log(response)
   }
 
+  logout = () => {
+    this.setState({user: {}});
+    Cookies.remove("user")
+  }
 
    
   render() {
@@ -62,14 +68,21 @@ export class App extends Component {
           <Link to="/books">BOOKS</Link>
            <Link to="/authors">AUTHORS</Link>
            <Link to="/search">SEARCH</Link>
-           <GoogleLogin 
+           {!user.email && <GoogleLogin 
            clientId="134231042819-ldje18ruml7mdidv2ca21946nputsmbu.apps.googleusercontent.com"
            buttonText="Login"
            onSuccess={this.responseGoogle}
            onFailure={this.responseGoogleFailure}
            cookiePolicy={'single_host_origin'}
-           />
+           /> }
            {user.email && <Link to="/add">ADD BOOK</Link>}
+           {user.email && 
+           <GoogleLogout
+           clientId="134231042819-ldje18ruml7mdidv2ca21946nputsmbu.apps.googleusercontent.com"
+           buttonText="Logout"
+           onLogoutSuccess={this.logout}>
+         </GoogleLogout>
+           }
           </Navbar.Brand>
         </Navbar>
         <section>
