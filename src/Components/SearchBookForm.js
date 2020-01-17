@@ -40,16 +40,40 @@ export class AddBookForm extends Component {
       return(book.volumeInfo.title)
     })
     const addNewBook = "/api/books"
-    axios.post(addNewBook, {params: {q: this.params}}).then((response) => {
+    axios.post(addNewBook, {params: {q: params}}).then((response) => {
       this.setState({response: response.data.items});
     }).catch((error) => {
       this.setState({error: error.message});
     });
 
   }
+
+  findIdentifier = (isbnType, book) => {
+    let result = null;
+    book.volumeInfo.industryIdentifiers.forEach((industryIdentifier) => {
+      if (industryIdentifier.type === isbnType) {
+        result = industryIdentifier.identifier;
+      }
+    });
+    return result;
+  }
+
   render(){
     const possibleBooks = this.state.response.map((book, i) => {
-    return(<AddResults bookCover={book.volumeInfo.imageLinks.smallThumbnail} title={book.volumeInfo.title} authors={book.volumeInfo.authors} summary={book.volumeInfo.description}/>)
+      const isbn10 = this.findIdentifier("ISBN_10", book);
+      const isbn13 = this.findIdentifier("ISBN_13", book);
+      return (
+        <AddResults
+          bookCover={book.volumeInfo.imageLinks.smallThumbnail}
+          title={book.volumeInfo.title}
+          authors={book.volumeInfo.authors}
+          summary={book.volumeInfo.description}
+          maturity={book.volumeInfo.maturityRating}
+          isbn10={isbn10}
+          isbn13={isbn13}
+          user={this.props.user}
+        />
+      );
     })
     return(
       <section>

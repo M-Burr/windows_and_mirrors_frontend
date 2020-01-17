@@ -13,7 +13,7 @@ import Books from './Components/Books.js'
 import BookDetails from './Components/BookDetails.js'
 import Authors from './Components/Authors.js'
 import Search from './Components/Search.js'
-import AddBookForm from './Components/AddBookForm'
+import SearchBookForm from './Components/SearchBookForm'
 import diverse_classroom from './Components/Images/diverse_classroom.jpg'
 import children_reading from './Components/Images/children_reading.jpg'
 import './App.css';
@@ -75,7 +75,7 @@ export class App extends Component {
         <section>
           <Switch>
             <Route path="/books/:id" component={BookDetails} />
-            <Route path="/add"> <AddBookForm/> </Route>
+            <Route path="/add"> <SearchBookForm user={this.state.user}/> </Route>
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
             <Route path="/search"> <Search/> </Route>
