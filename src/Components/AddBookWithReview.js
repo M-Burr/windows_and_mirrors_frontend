@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import AddResults from './AddResults.js';
 import Tags from './Tags.js'
 import { Modal, Button } from 'react-bootstrap'
+import axios from 'axios'
 
 export class AddBookWithReview extends Component {
   constructor(props){
@@ -18,10 +19,10 @@ export class AddBookWithReview extends Component {
       maturityRating: this.props.maturityRating,
       tags: [],
       genre: '',
-      startAge: '',
-      endAge: '',
-      startGrade: '',
-      endGrade: '',
+      startAge: 0,
+      endAge: 0,
+      startGrade: 0,
+      endGrade: 0,
       user_id: this.props.user.id,
       rating: '',
       praise: '',
@@ -91,6 +92,57 @@ export class AddBookWithReview extends Component {
     }
   }
 
+  onBookSubmit = (e) => {
+    e.preventDefault();
+    const bookParams = {
+      title: this.state.title,
+      authors: this.state.authors,
+      bookCover: this.state.bookCover,
+      genre: this.state.genre,
+      isbn10: this.state.isbn10,
+      isbn13: this.state.isbn13,
+      summary: this.state.summary,
+      tags: this.state.tags,
+      startAge: this.state.startAge,
+      endAge: this.state.endAge,
+      startGrade: this.state.startGrade,
+      endGrade: this.state.endGrade,
+      userId: this.state.user_id,
+      rating: this.state.rating,
+      praise: this.state.praise,
+      concern: this.state.concern,
+      discussionTopic: this.state.discussion_topic
+    }
+    const databaseBook = "/api/books"
+    // const title = this.state.title
+    // const authors = this.state.authors
+    // const bookCover = this.state.bookCover
+    // const genre = this.state.genre
+    // const isbn10 = this.state.isbn10
+    // const isbn13 = this.state.isbn13
+    // const summary = this.state.summary
+    // const tags = this.state.tags
+    // const startAge = this.state.startAge
+    // const endAge = this.state.endAge
+    // const startGrade = this.state.startGrade
+    // const endGrade = this.state.endGrade
+    // const userId = this.state.user_id
+    // const rating = this.state.rating
+    // const praise = this.state.praise
+    // const concern = this.state.concern
+    // const discussionTopic = this.state.discussion_topic
+   
+
+    axios.post(databaseBook,bookParams).then((response) => {
+      this.setState({response: response.data.items});
+    }).catch((error) => {
+      this.setState({error: error.message});
+    });
+    console.log(this.state.error)
+
+    this.handleClose()
+  }
+
   render(){
     return(
         <>
@@ -106,81 +158,83 @@ export class AddBookWithReview extends Component {
                 <label>Concerns: <input type="text" value={this.state.concern} onChange={this.concernChange} /></label>
                 <label>Related Classroom Discussions: <input type="text" value={this.state.discussion_topic} onChange={this.discussionChange} /></label>
                 Tags:<Tags selected={this.state.tags} onSelection={this.onTagSelection} />
-                Appropriate for - starting age (in years):<select>
-                  <option value="0" onChange={this.startAgeChange}>0</option>
-                  <option value="1" onChange={this.startAgeChange}>1</option>
-                  <option value="2" onChange={this.startAgeChange}>2</option>
-                  <option value="3" onChange={this.startAgeChange}>3</option>
-                  <option value="4" onChange={this.startAgeChange}>4</option>
-                  <option value="5" onChange={this.startAgeChange}>5</option>
-                  <option value="6" onChange={this.startAgeChange}>6</option>
-                  <option value="7" onChange={this.startAgeChange}>7</option>
-                  <option value="8" onChange={this.startAgeChange}>8</option>
-                  <option value="9" onChange={this.startAgeChange}>9</option>
-                  <option value="10" onChange={this.startAgeChange}>10</option>
-                  <option value="11" onChange={this.startAgeChange}>11</option>
-                  <option value="12" onChange={this.startAgeChange}>12</option>
+                Appropriate for - starting age (in years):<select value={this.state.startAge} onChange={this.startAgeChange}>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
                 </select>
-                Appropriate for - ending age (in years): <select>
-                  <option value="0" onChange={this.endAgeChange}>0</option>
-                  <option value="1" onChange={this.endAgeChange}>1</option>
-                  <option value="2" onChange={this.endAgeChange}>2</option>
-                  <option value="3" onChange={this.endAgeChange}>3</option>
-                  <option value="4" onChange={this.endAgeChange}>4</option>
-                  <option value="5" onChange={this.endAgeChange}>5</option>
-                  <option value="6" onChange={this.endAgeChange}>6</option>
-                  <option value="7" onChange={this.endAgeChange}>7</option>
-                  <option value="8" onChange={this.endAgeChange}>8</option>
-                  <option value="9" onChange={this.endAgeChange}>9</option>
-                  <option value="10" onChange={this.endAgeChange}>10</option>
-                  <option value="11" onChange={this.endAgeChange}>11</option>
-                  <option value="12" onChange={this.endAgeChange}>12</option>
+                Appropriate for - ending age (in years): <select value={this.state.endAge} onChange={this.endAgeChange}>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
                 </select>
-                Appropriate for - starting Grade: <select>
-                  <option value="0" onChange={this.startGradeChange}>Toddlerhood</option>
-                  <option value="1" onChange={this.startGradeChange}>Preschool</option>
-                  <option value="2" onChange={this.startGradeChange}>1st</option>
-                  <option value="3" onChange={this.startGradeChange}>2nd</option>
-                  <option value="4" onChange={this.startGradeChange}>3rd</option>
-                  <option value="5" onChange={this.startGradeChange}>4th</option>
-                  <option value="6" onChange={this.startGradeChange}>5th</option>
-                  <option value="7" onChange={this.startGradeChange}>6th</option>
-                  <option value="8" onChange={this.startGradeChange}>7th</option>
-                  <option value="9" onChange={this.startGradeChange}>8th</option>
-                  <option value="10" onChange={this.startGradeChange}>9th</option>
-                  <option value="11" onChange={this.startGradeChange}>10th</option>
-                  <option value="12" onChange={this.startGradeChange}>11th</option>
-                  <option value="13" onChange={this.startGradeChange}>12th</option>
+                Appropriate for - starting Grade: <select value={this.state.startGrade} onChange={this.startGradeChange}>
+                  <option value="0">Toddlerhood</option>
+                  <option value="1">Preschool</option>
+                  <option value="2">Kindergarten</option>
+                  <option value="3">1st</option>
+                  <option value="4">2nd</option>
+                  <option value="5">3rd</option>
+                  <option value="6">4th</option>
+                  <option value="7">5th</option>
+                  <option value="8">6th</option>
+                  <option value="9">7th</option>
+                  <option value="10">8th</option>
+                  <option value="11">9th</option>
+                  <option value="12">10th</option>
+                  <option value="13">11th</option>
+                  <option value="14">12th</option>
                 </select>
-                Appropriate for - ending Grade: <select>
-                  <option value="0" onChange={this.endGradeChange}>Toddlerhood</option>
-                  <option value="1" onChange={this.endGradeChange}>Preschool</option>
-                  <option value="2" onChange={this.endGradeChange}>1st</option>
-                  <option value="3" onChange={this.endGradeChange}>2nd</option>
-                  <option value="4" onChange={this.endGradeChange}>3rd</option>
-                  <option value="5" onChange={this.endGradeChange}>4th</option>
-                  <option value="6" onChange={this.endGradeChange}>5th</option>
-                  <option value="7" onChange={this.endGradeChange}>6th</option>
-                  <option value="8" onChange={this.endGradeChange}>7th</option>
-                  <option value="9" onChange={this.endGradeChange}>8th</option>
-                  <option value="10" onChange={this.endGradeChange}>9th</option>
-                  <option value="11" onChange={this.endGradeChange}>10th</option>
-                  <option value="12" onChange={this.endGradeChange}>11th</option>
-                  <option value="13" onChange={this.endGradeChange}>12th</option>
+                Appropriate for - ending Grade: <select value={this.state.endGrade} onChange={this.endGradeChange}>
+                  <option value="0">Toddlerhood</option>
+                  <option value="1">Preschool</option>
+                  <option value="2">Kindergarten</option>
+                  <option value="3">1st</option>
+                  <option value="4">2nd</option>
+                  <option value="5">3rd</option>
+                  <option value="6">4th</option>
+                  <option value="7">5th</option>
+                  <option value="8">6th</option>
+                  <option value="9">7th</option>
+                  <option value="10">8th</option>
+                  <option value="11">9th</option>
+                  <option value="12">10th</option>
+                  <option value="13">11th</option>
+                  <option value="14">12th</option>
                 </select>
-                Please Rating This Book: <select>
-                  <option value="0" on change={this.ratingChange}>0</option>
-                  <option value="1" on change={this.ratingChange}>1</option>
-                  <option value="2" on change={this.ratingChange}>2</option>
-                  <option value="3" on change={this.ratingChange}>3</option>
-                  <option value="4" on change={this.ratingChange}>4</option>
-                  <option value="5" on change={this.ratingChange}>5</option>
+                Please Rating This Book: <select value={this.state.rating} onChange={this.ratingChange}>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
                 </select>
               </form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>Close</Button>
-            <Button variant="primary" onClick={this.handleClose}>Add Book with Review</Button>
+            <Button variant="primary" onClick={this.onBookSubmit}>Add Book with Review</Button>
           </Modal.Footer>
         </Modal>
         </>
