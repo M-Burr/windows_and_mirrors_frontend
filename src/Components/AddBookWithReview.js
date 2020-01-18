@@ -24,7 +24,7 @@ export class AddBookWithReview extends Component {
       startGrade: 0,
       endGrade: 0,
       user_id: this.props.user.id,
-      rating: '',
+      rating: 0,
       praise: '',
       concern: '',
       discussion_topic: ''

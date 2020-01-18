@@ -1,0 +1,699 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.1
+-- Dumped by pg_dump version 12.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: test_schema; Type: SCHEMA; Schema: -; Owner: mariya
+--
+
+CREATE SCHEMA test_schema;
+
+
+ALTER SCHEMA test_schema OWNER TO mariya;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: authors; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.authors (
+    id bigint NOT NULL,
+    name text NOT NULL,
+    avg_rating double precision
+);
+
+
+ALTER TABLE public.authors OWNER TO mariya;
+
+--
+-- Name: authors_books; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.authors_books (
+    author_id bigint NOT NULL,
+    book_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.authors_books OWNER TO mariya;
+
+--
+-- Name: authors_id_seq; Type: SEQUENCE; Schema: public; Owner: mariya
+--
+
+CREATE SEQUENCE public.authors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.authors_id_seq OWNER TO mariya;
+
+--
+-- Name: authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mariya
+--
+
+ALTER SEQUENCE public.authors_id_seq OWNED BY public.authors.id;
+
+
+--
+-- Name: books; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.books (
+    id bigint NOT NULL,
+    title text NOT NULL,
+    isbn10 character varying(13),
+    isbn13 character varying(14) NOT NULL,
+    summary text NOT NULL,
+    start_age bigint,
+    end_age bigint,
+    start_grade character varying,
+    end_grade character varying,
+    img text,
+    genre text
+);
+
+
+ALTER TABLE public.books OWNER TO mariya;
+
+--
+-- Name: books_id_seq; Type: SEQUENCE; Schema: public; Owner: mariya
+--
+
+CREATE SEQUENCE public.books_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.books_id_seq OWNER TO mariya;
+
+--
+-- Name: books_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mariya
+--
+
+ALTER SEQUENCE public.books_id_seq OWNED BY public.books.id;
+
+
+--
+-- Name: books_tags; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.books_tags (
+    book_id bigint,
+    tag_id bigint
+);
+
+
+ALTER TABLE public.books_tags OWNER TO mariya;
+
+--
+-- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.flyway_schema_history (
+    installed_rank integer NOT NULL,
+    version character varying(50),
+    description character varying(200) NOT NULL,
+    type character varying(20) NOT NULL,
+    script character varying(1000) NOT NULL,
+    checksum integer,
+    installed_by character varying(100) NOT NULL,
+    installed_on timestamp without time zone DEFAULT now() NOT NULL,
+    execution_time integer NOT NULL,
+    success boolean NOT NULL
+);
+
+
+ALTER TABLE public.flyway_schema_history OWNER TO mariya;
+
+--
+-- Name: reviews; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.reviews (
+    id bigint NOT NULL,
+    user_id bigint,
+    book_id bigint,
+    rating double precision NOT NULL,
+    praise character varying NOT NULL,
+    concern character varying NOT NULL,
+    discussion_topics character varying
+);
+
+
+ALTER TABLE public.reviews OWNER TO mariya;
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE; Schema: public; Owner: mariya
+--
+
+CREATE SEQUENCE public.reviews_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reviews_id_seq OWNER TO mariya;
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mariya
+--
+
+ALTER SEQUENCE public.reviews_id_seq OWNED BY public.reviews.id;
+
+
+--
+-- Name: tags; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.tags (
+    id bigint NOT NULL,
+    identifier text NOT NULL
+);
+
+
+ALTER TABLE public.tags OWNER TO mariya;
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: mariya
+--
+
+CREATE SEQUENCE public.tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tags_id_seq OWNER TO mariya;
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mariya
+--
+
+ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: mariya
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    account_type character varying DEFAULT 'general'::character varying NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO mariya;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: mariya
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO mariya;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mariya
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: authors id; Type: DEFAULT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.authors ALTER COLUMN id SET DEFAULT nextval('public.authors_id_seq'::regclass);
+
+
+--
+-- Name: books id; Type: DEFAULT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.books ALTER COLUMN id SET DEFAULT nextval('public.books_id_seq'::regclass);
+
+
+--
+-- Name: reviews id; Type: DEFAULT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.reviews ALTER COLUMN id SET DEFAULT nextval('public.reviews_id_seq'::regclass);
+
+
+--
+-- Name: tags id; Type: DEFAULT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: authors; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.authors (id, name, avg_rating) FROM stdin;
+1	Jian Li	\N
+2	Eric Walters	3.07
+3	Andi Diehn	\N
+4	Sandhya Acharya	\N
+5	Vanessa Alexandre	3.4
+6	Robin Muller	\N
+7	Patricia Storms	\N
+8	Carmen Agra. Deedy	4.5
+9	Wilson Kimeli. Naiyomah	4.5
+10	Margaret McAllister	\N
+11	Holly Sterling	\N
+12	Charles R. Smith	\N
+13	Shane Evans	\N
+14	Roseanne Thong	\N
+15	Sara Palacios	\N
+16	Michael Fleming	\N
+17	Carole Gerber	\N
+18	Gilbert Ford	\N
+19	Tonya Bolden	\N
+20	Daniel W. Vandever	\N
+21	Erica Silverman	\N
+22	Jessica Love	5
+23	Margarita Engle	4.8
+24	Richard Van Camp	\N
+25	Monique Gray Smith	\N
+26	Andrea Beaty	5
+27	Marcus Pfister	0
+\.
+
+
+--
+-- Data for Name: authors_books; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.authors_books (author_id, book_id) FROM stdin;
+1	1
+3	2
+2	3
+4	4
+5	4
+18	5
+19	5
+6	6
+7	6
+8	7
+9	7
+10	8
+11	8
+10	9
+12	10
+13	10
+20	11
+14	12
+15	12
+17	13
+16	13
+21	15
+22	16
+23	17
+24	18
+25	19
+24	20
+26	25
+27	26
+\.
+
+
+--
+-- Data for Name: books; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.books (id, title, isbn10, isbn13, summary, start_age, end_age, start_grade, end_grade, img, genre) FROM stdin;
+2	Human Computer	161930774X	978-1619307773	A full-color picture book biography about Mary Jackson, who became the first female African American engineer at NASA—includes several STEM activities for some real-world learning connections!	6	9	kindergarten	3	http://books.google.com/books/content?id=tF08wQEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	biography
+1	Sheep Beauty	160220988X	978-1602209886	The kindness and generosity of those born under the sign of the sheep in the Chinese zodiac is brought to life in this heartwarming tale. Long, long ago, there lived a kind physician. He lived on a mountain in a small Chinese village where he practiced traditional Chinese medicine for all the villagers. On his way home one day, he found an injured sheep, rescued it and brought it home where he nursed the sheep back to life. One evening, after the sheep had been living with the physician for some time, a beast barged into the village, demanding payment of each household in the form of one child. If the villagers refused to hand over their children, the beast would eat everyone! In the blink of an eye, the rescued sheep transforms into a lovely girl, who, with a clever plan, manages to frighten the beast away and keep everyone in the village safe from harm. And so, with one simple act of kindness, an entire village is saved, reminding us that every action, no matter how small, has consequences.	4	8	preschool	8	http://books.google.com/books/content?id=iZ8ErgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+18	Little You	1459802489	978-1459802483	Richard Van Camp, internationally renowned storyteller and bestselling author of the hugely successful Welcome Song for Baby: A Lullaby for Newborns, has partnered with award-winning illustrator Julie Flett to create a tender board book for babies and toddlers that celebrates the potential of every child. With its delightful contemporary illustrations, Little You is perfect to be shared, read or sung to all the little people in your life—and the new little ones on the way!	2	6	preschool	1	http://books.google.com/books/content?id=jt1iDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+6	13 Ghosts of Halloween	439935695	978-0439935692	In simple rhyming text, discover what there is to frighten a group of children when the clock strikes midnight on Halloween.	3	6	preschool	2	http://books.google.com/books/content?id=CW9EPwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+7	14 Cows for America	9781561454907	978-1561459612	Maasai tribal members, after hearing the story of the September 11th attacks from a young Massai who was in New York on that day, decide to present the American people with fourteen sacred cows as a healing gift.	6	10	2	3	http://books.google.com/books/content?id=R8hwDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+8	15 Things Not to do with a Grandma	1847808549	978-1847808547	A grandma is a wonderful person to have in your life. Just follow these simple rules and you'll both be very happy. ... Don't hide an elephant in your grandma's bed, give her jelly beans for breakfast, or wear her underwear on your head. And never send her to the moon in a rocket!"	5	6	preschool	2	http://books.google.com/books/content?id=rnz_jwEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+10	28 Days	1596438207	978-1596438200	A picture book look at many of the men and women who revolutionized life for African Americans throughout history"	6	10	2	3	http://books.google.com/books/content?id=LzmQBQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	non-fiction
+11	Fall in line, Holden!	1893354504	978-1893354500	At a very strict school in Indigenous Nation, everyone but Holden stays in line until they reach the door at the end of the school day.	8	11	2	5	http://books.google.com/books/content?id=fXjaswEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+12	Twas Nochebuena	670016349	978-0670016341	Explores Latin American traditions for celebrating Christmas Eve in a text that combines English and Spanish words and follows the rhythm of Clement Moore's "The Night Before Christmas."	3	5	preschool	kindergarten	http://books.google.com/books/content?id=8Z8TAwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+13	10 Busy Brooms	1524768995	978-1524768997	Little witches soar the sky in this cumulative Halloween counting book.	2	5	preschool	kindergarten	http://books.google.com/books/content?id=sVumDAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+14	Jabari Jumps	763678384	978-0763678388	Jabari is definitely ready to jump off the diving board. He’s finished his swimming lessons and passed his swim test, and he’s a great jumper, so he’s not scared at all. “Looks easy,” says Jabari, watching the other kids take their turns. But when his dad squeezes his hand, Jabari squeezes back. He needs to figure out what kind of special jump to do anyway, and he should probably do some stretches before climbing up onto the diving board. In a sweetly appealing tale of overcoming your fears, newcomer Gaia Cornwall captures a moment between a patient and encouraging father and a determined little boy you can’t help but root for.	4	8	preschool	3	http://books.google.com/books/content?id=Skg-DgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+15	Jack (Not Jackie)	1499807317	978-1499807318	In this heartwarming picture book, a big sister realizes that her little sister, Jackie, doesn't like dresses or fairies-she likes ties and bugs! Will she and her family be able to accept that Jackie identifies more as "Jack"?\n\nSusan thinks her little sister Jackie has the best giggle! She can't wait for Jackie to get older so they can do all sorts of things like play forest fairies and be explorers together. But as Jackie grows, she doesn't want to play those games. She wants to play with mud and be a super bug! Jackie also doesn't like dresses or her long hair, and she would rather be called Jack.\n\nReaders will love this sweet story about change and acceptance. This book is published in partnership with GLAAD to accelerate LGBTQ inclusivity and acceptance.	4	8	preschool	3	http://books.google.com/books/content?id=dgBzswEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+5	12 days of New York	1419705423	978-1419705427	A class trip to the Big Apple is played out as an urban variation of the "Twelve Days of Christmas."	5	7	kindergarten	2	http://books.google.com/books/content?id=UIp7MAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+17	Drum Dream Girl: How One Girl's Courage Changed Music	544102290	978-1520018171	Girls cannot be drummers. Long ago on an island filled with music, no one questioned that rule—until the drum dream girl. In her city of drumbeats, she dreamed of pounding tall congas and tapping small bongós. She had to keep quiet. She had to practice in secret. But when at last her dream-bright music was heard, everyone sang and danced and decided that both girls and boys should be free to drum and dream.\n\nInspired by the childhood of Millo Castro Zaldarriaga, a Chinese-African-Cuban girl who broke Cuba's traditional taboo against female drummers, Drum Dream Girl tells an inspiring true story for dreamers everywhere.	4	8	preschool	3	http://books.google.com/books/content?id=nD7BBwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+4	10 gulab jamuns	1684012619	978-1684012619	Idu (Ee-doo) and Adu (Aa-doo) are very excited. Guests are coming over for dinner and their Mamma has already cooked a lot. Next, she is cooking Gulab jamuns, but Idu and Adu don't know what Gulab jamuns are. Before long, they discover just how good these wonderful golden, sugary syrup-soaked balls are and how quickly they melt in their mouths. But Mamma has only made 10 Gulab jamuns. Will they last until their guests come?	4	7	preschool	kindergarten	http://books.google.com/books/content?id=N4hVtAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+3	My Name is a Blessing	1770493018	978-1770493018	Based on a true story about a young Kenyan boy whose mother left him but had named him Muthini which meant suffering because he was born with no fingers on his left hand and only two on his right. Many times he was made fun of or avoided which hurt him deeply. He lives with his very elderly grandmother, his Nyanya, along with many cousins whose parents had either died or left them. They are extremely poor and there is never enough money or food, but plenty of love. A difficult choice must be made and Muthini is the youngest child and needs to have a better chance in life, so his Nyanya takes him to an orphanage where he is blessed and his name is changed to Baraka which means blessing for he was a blessing just as his grandmother always knew	6	9	1	4	http://books.google.com/books/content?id=fjU9DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+9	15 Things Not to do with a Puppy	1786030470	978-1786030474	The hilarious follow-up to 15 things not to do with your granny and 15 things not to do with a baby has all the warmth and humour of the previous two titles and teaches children how to look after their new puppy in a fun, quirky way. DON'T teach your puppy how to play the trombone or take her to school. DON'T let your puppy drive the car or juggle with the washing up. DON'T walk your puppy at a football match or wake her with a shout - she won't understand. DO play with your puppy, be patient with your puppy, walk your puppy and give her lots of cuddles and love. In no time at all you'll be best friends!	2	5	preschool	kindergarten	http://books.google.com/books/content?id=nVertAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api	fiction
+19	My Heart Fills with Happiness	1459809572	978-1459809574	The sun on your face. The smell of warm bannock baking in the oven. Holding the hand of someone you love. What fills your heart with happiness? This beautiful board book, with illustrations from celebrated artist Julie Flett, serves as a reminder for little ones and adults alike to reflect on and cherish the moments in life that bring us joy.\n\nInternational speaker and award-winning author Monique Gray Smith wrote My Heart Fills with Happiness to support the wellness of Indigenous children and families, and to encourage young children to reflect on what makes them happy.	2	6	preschool	1	http://books.google.com/books/content?id=lt1iDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+20	We Sang You Home	145981178X	978-1459811782	In this sweet and lyrical board book from the creators of the bestselling Little You, gentle rhythmic text captures the wonder new parents feel as they welcome baby into the world. A celebration of the bond between parent and child, this is the perfect song to share with your little ones.\n\nInternationally renowned storyteller and bestselling author Richard Van Camp teams up with award-winning illustrator Julie Flett for a second time to create a stunning board book for babies and toddlers.	2	6	preschool	1	http://books.google.com/books/content?id=A9SkDAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+16	Julian is a Mermaid	763690457	978-0763690458	While riding the subway home from the pool with his abuela one day, Julián notices three women spectacularly dressed up. Their hair billows in brilliant hues, their dresses end in fishtails, and their joy fills the train car. When Julián gets home, daydreaming of the magic he’s seen, all he can think about is dressing up just like the ladies in his own fabulous mermaid costume: a butter-yellow curtain for his tail, the fronds of a potted fern for his headdress. But what will Abuela think about the mess he makes — and even more importantly, what will she think about how Julián sees himself? Mesmerizing and full of heart, Jessica Love’s author-illustrator debut is a jubilant picture of self-love and a radiant celebration of individuality.	4	8	preschool	3	http://books.google.com/books/content?id=ggSbDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api	fiction
+25	Ada Twist's Big Project Book for Stellar Scientists	168335303X	9781683353034	For curious young minds who ask why? how? what? when? and then why? again and again, the bestselling team behind Ada Twist, Scientist has developed a STEM project book based on the beloved character. Ada herself will take readers through the scientific method and introduce them to some of her favorite sciences, including chemistry, botany, astronomy, and environmental science. Budding scientists will solve everyday mysteries and come to think more critically about the world around them. Like Rosie’s and Iggy’s project books, Ada’s will be empowering and kid-friendly, with tons of classroom and parent appeal. No kid’s lab would be complete without it!	0	10	0	8	\N	fiction
+26	The Rainbow Fish	1558580093	9781558580091	The most beautiful fish in the entire ocean discovers the real value of personal beauty and friendship.	1	12	7	14	\N	fiction
+\.
+
+
+--
+-- Data for Name: books_tags; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.books_tags (book_id, tag_id) FROM stdin;
+1	3
+1	1
+1	2
+2	20
+2	7
+2	10
+2	8
+1	9
+3	4
+3	10
+3	20
+3	6
+4	12
+4	3
+4	13
+13	14
+13	15
+5	14
+5	15
+6	14
+6	15
+7	6
+7	16
+7	20
+8	17
+8	20
+9	20
+10	20
+10	7
+10	8
+10	10
+10	22
+11	10
+11	18
+12	1
+12	19
+12	14
+14	20
+14	7
+14	15
+14	23
+15	24
+15	25
+16	14
+16	25
+16	19
+16	1
+16	17
+17	19
+17	21
+17	22
+20	15
+20	18
+19	15
+19	18
+18	15
+18	18
+25	26
+26	11
+\.
+
+
+--
+-- Data for Name: flyway_schema_history; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.flyway_schema_history (installed_rank, version, description, type, script, checksum, installed_by, installed_on, execution_time, success) FROM stdin;
+\.
+
+
+--
+-- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.reviews (id, user_id, book_id, rating, praise, concern, discussion_topics) FROM stdin;
+1	2	1	4	The story offers many reading and storytelling possibilities in addition to introducing and demonstrating the eighth sign of the Chinese zodiac	outdated pictures	n/a
+2	1	2	5	Interesting takes on important women should appeal to both browsers and report writers.	n/a	Occassionally reinforced concepts from previous teaching on grit & resiliance
+3	1	3	5	addresses difficult topics (e.g., poverty, custody, etc.) with dignity	outdated images. Heavy topics	discussions around different abilities
+4	4	3	5	discusses physical disability with dignity & in an age-appropriate way	n/a	discussions around different abilities & being kind
+5	3	3	5	touches in poverty in dignified way	n/a	n/a
+6	4	10	5	Succinct biographical info, included throughout, further cements the value and utility of the project, both in and out of the classroom.	n/a	grit & resiliency 
+7	1	10	5	excellent images	n/a	black history month
+8	3	14	5	In her debut, Cornwall places her loving black family at the center, coloring the swimming pool and park beyond in minty hues and adding whimsy with digitally collaged newspaper for skyscrapers...This simple and sincere tale of working up courage to face fears makes quite a splash.	story of a black family written by a white author. However, the story is compelling and told gracefully.	\N
+9	2	15	0	n/a	According to this book, there are two types of children. Children who enjoy twirling, fairies, dresses, pink, and long hair are called "girls." Children who enjoy dinosaurs, mud, superhero capes, neckties, and cars are called "boys." The way to tell if a child is a girl or a boy is by observing which set of sexist stereotypes he or she adheres to.	\N
+10	1	15	5	This is a very special book with a unique perspective of how an entire family navigates through a transition. We like to have books in our home that celebrate diversity. If your family is similar, this is a must add to your personal library. This book is a very well written and thoughtful story. I read it to my 4 year old who enjoyed it and had lots of questions. Questions are good and it helped her understand that some kids feel different inside. Guess what? This book did not make her feel any differently about herself after we read it. Her take away was that when you love people, it doesn't matter what they look like on the outside.	Simplistic, and stereotyped portrayls of gender may warrent additional discussion with students/children. Overall, great illistrations, attempts at inclusivity, and invites/opens discussion with kids	n/a
+11	2	16	5	The illustrations are just magical and very well done. I also really appreciate the representation in the book. You see various skin tones, hair types, and body types! Its also great to NOT see a story where the child only comes to accept themselves AFTER being bullied. This book is pure celebration. Julian is living his best life as is, and thats what kids need to see. Representation doesnt also need to include the child being torn down/bullied. I also appreciate that this book wasnt too long winded. I can get through this with a squirmy 4-5 yr old no problem. I would recommend this book for a preschooler or kindergartener.	n/a	\N
+12	3	16	5	As other reviewers have noted, this is one of the few books about boys who go against masculine norms that doesn't spend most of the pages focused on people who oppose or downright bully the boy for his preferences. In fact, there is no time spent on negative feedback. Instead, the boy stays true to himself, shows resourcefulness and creativity and authenticity, and his abuela recognizes it and immediately becomes his ally. It's a beautiful story and the art is mesmerizing. We love and will cherish this book.	n/a	\N
+13	4	16	5	This is a gorgeously illustrated picture book with a fantastic, simple story. Julian is a boy who wishes to be a beautiful, flowy-haired, swishy-tailed mermaid. His abuela helps him realize his dream. The end. Adults will recognize that, although Abuela might want to scold Julian for kinda-sorta destroying the house in his quest to become a sea creature, she perhaps recognizes that now is not the moment to chide, but rather to show him her unconditional love and support. I appreciated that nobody in this book tells Julian he can't be a mermaid. So many books about gender-nonconforming children spend too much time focusing on the naysayers. Well, this book is all about Julian and his fabulousness. My 3.5yo son and I both enjoyed reading this book multiple times already, and it's been here for less than 12 hours! Highly recommend.	n/a	\N
+14	1	17	5	A valuable addition to the growing library of stories about strong Latina women.	n/a	great for classroom readaloud, or to incorporate into music/circle-time
+15	2	18	5	not too many words per page, which is nice when one is dealing with a toddler who loves to turn pages	none!	\N
+16	5	20	5	Such a beautifully simple board book. Perfect as a first book for young readers. The illustrations are beautiful and the writing poetic.	no concerns - excellent addition to any collection!	\N
+17	6	25	5	jafhaf	asfa	asfa
+18	6	26	0	its bad	bad!!	na
+\.
+
+
+--
+-- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.tags (id, identifier) FROM stdin;
+1	multilingual
+2	Chinese
+3	Asian-American
+4	disability
+5	economic struggle
+6	Kenyan
+7	African American
+8	STEM
+9	folklore
+10	oppression & resiliance
+11	holiday
+12	Indian
+13	Hindu
+14	multiracial
+15	incidental
+16	immigrant
+17	diverse family
+18	Indigenous peoples
+19	Latinx
+20	Black
+21	female
+22	activism
+23	grit & determination
+24	LGBTQIA+
+25	gender diversity & nonbinary
+26	stem
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mariya
+--
+
+COPY public.users (id, name, account_type, email) FROM stdin;
+1	Mariya Awesome Sauce	general	mariya@gmail.com
+4	Ada Lovelace	general	ada@gmail.com
+3	Abi Husky	general	abi@gmail.com
+5	Tommy Salami	general	tommy@gmail.com
+2	Ryan Coolbeans	general	ryan@gmail.com
+6	Mariya Burrows	general	mariya.burrows@gmail.com
+\.
+
+
+--
+-- Name: authors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mariya
+--
+
+SELECT pg_catalog.setval('public.authors_id_seq', 27, true);
+
+
+--
+-- Name: books_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mariya
+--
+
+SELECT pg_catalog.setval('public.books_id_seq', 26, true);
+
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mariya
+--
+
+SELECT pg_catalog.setval('public.reviews_id_seq', 18, true);
+
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mariya
+--
+
+SELECT pg_catalog.setval('public.tags_id_seq', 26, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mariya
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 6, true);
+
+
+--
+-- Name: authors authors_pkey; Type: CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: books books_pkey; Type: CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: flyway_schema_history flyway_schema_history_pk; Type: CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.flyway_schema_history
+    ADD CONSTRAINT flyway_schema_history_pk PRIMARY KEY (installed_rank);
+
+
+--
+-- Name: reviews reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: authors_books_index; Type: INDEX; Schema: public; Owner: mariya
+--
+
+CREATE INDEX authors_books_index ON public.authors_books USING btree (author_id, book_id);
+
+
+--
+-- Name: books_tags_index; Type: INDEX; Schema: public; Owner: mariya
+--
+
+CREATE INDEX books_tags_index ON public.books_tags USING btree (book_id, tag_id);
+
+
+--
+-- Name: flyway_schema_history_s_idx; Type: INDEX; Schema: public; Owner: mariya
+--
+
+CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING btree (success);
+
+
+--
+-- Name: authors_books author_id; Type: FK CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.authors_books
+    ADD CONSTRAINT author_id FOREIGN KEY (author_id) REFERENCES public.authors(id);
+
+
+--
+-- Name: authors_books book_id; Type: FK CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.authors_books
+    ADD CONSTRAINT book_id FOREIGN KEY (book_id) REFERENCES public.books(id);
+
+
+--
+-- Name: reviews book_id; Type: FK CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT book_id FOREIGN KEY (book_id) REFERENCES public.books(id);
+
+
+--
+-- Name: books_tags book_id; Type: FK CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.books_tags
+    ADD CONSTRAINT book_id FOREIGN KEY (book_id) REFERENCES public.books(id);
+
+
+--
+-- Name: books_tags tag_id; Type: FK CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.books_tags
+    ADD CONSTRAINT tag_id FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
+-- Name: reviews user_id; Type: FK CONSTRAINT; Schema: public; Owner: mariya
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

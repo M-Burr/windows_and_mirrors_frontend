@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import Book from './Book.js';
 import axios from 'axios';
-import { Row } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 class Books extends Component {
   constructor(props) {

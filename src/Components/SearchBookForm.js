@@ -66,7 +66,7 @@ export class AddBookForm extends Component {
         <AddResults
           bookCover={book.volumeInfo.imageLinks.smallThumbnail}
           title={book.volumeInfo.title}
-          authors={book.volumeInfo.authors}
+          authors={book.volumeInfo.authors || []}
           summary={book.volumeInfo.description}
           maturity={book.volumeInfo.maturityRating}
           isbn10={isbn10}
