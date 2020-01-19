@@ -11,7 +11,7 @@ export class BookDetails extends Component {
 
     this.state = {
       book: undefined,
-      error: ''
+      error: '',
     }
   }
 
@@ -51,8 +51,7 @@ return <p>{tag.identifier}</p>
              <p>{this.state.book.summary}</p>
           </Col>
         </Row>
-        Reviews
-        <Reviews bookId={this.state.book.id} />
+        <Reviews bookId={this.state.book.id} bookTitle={this.state.book.title} userId={this.props.userId}/>
         </Col>
         <Col> 
         Genre: {this.state.book.genre}

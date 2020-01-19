@@ -113,33 +113,12 @@ export class AddBookWithReview extends Component {
       concern: this.state.concern,
       discussionTopic: this.state.discussion_topic
     }
-    const databaseBook = "/api/books"
-    // const title = this.state.title
-    // const authors = this.state.authors
-    // const bookCover = this.state.bookCover
-    // const genre = this.state.genre
-    // const isbn10 = this.state.isbn10
-    // const isbn13 = this.state.isbn13
-    // const summary = this.state.summary
-    // const tags = this.state.tags
-    // const startAge = this.state.startAge
-    // const endAge = this.state.endAge
-    // const startGrade = this.state.startGrade
-    // const endGrade = this.state.endGrade
-    // const userId = this.state.user_id
-    // const rating = this.state.rating
-    // const praise = this.state.praise
-    // const concern = this.state.concern
-    // const discussionTopic = this.state.discussion_topic
-   
-
+    const databaseBook = "/api/books"   
     axios.post(databaseBook,bookParams).then((response) => {
       this.setState({response: response.data.items});
     }).catch((error) => {
       this.setState({error: error.message});
     });
-    console.log(this.state.error)
-
     this.handleClose()
   }
 

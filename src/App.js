@@ -87,7 +87,10 @@ export class App extends Component {
         </Navbar>
         <section>
           <Switch>
-            <Route path="/books/:id" component={BookDetails} />
+            <Route 
+              path="/books/:id" 
+              render={(props) => <BookDetails {...props} userId={this.state.user.id} />}
+            />
             <Route path="/add"> <SearchBookForm user={this.state.user}/> </Route>
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
