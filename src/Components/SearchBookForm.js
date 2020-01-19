@@ -11,7 +11,8 @@ export class AddBookForm extends Component {
       title: '',
       author: '',
       response: [],
-      error: ''
+      error: '',
+      noBooksFound: false
     }
   }
 
@@ -28,7 +29,11 @@ export class AddBookForm extends Component {
     const title = this.state.title
     const googleBooks = "https://www.googleapis.com/books/v1/volumes"
     axios.get(googleBooks, {params: {q: title}}).then((response) => {
-      this.setState({response: response.data.items});
+      if (response.data.totalItems < 1){
+        this.setState({response: [], noBooksFound: true});
+      } else {
+        this.setState({response: response.data.items, noBooksFound: false});
+      }
     }).catch((error) => {
       this.setState({error: error.message});
     });
@@ -50,6 +55,7 @@ export class AddBookForm extends Component {
 
   findIdentifier = (isbnType, book) => {
     let result = null;
+    if (!book.volumeInfo.industryIdentifiers){return null}
     book.volumeInfo.industryIdentifiers.forEach((industryIdentifier) => {
       if (industryIdentifier.type === isbnType) {
         result = industryIdentifier.identifier;
@@ -64,7 +70,7 @@ export class AddBookForm extends Component {
       const isbn13 = this.findIdentifier("ISBN_13", book);
       return (
         <AddResults
-          bookCover={book.volumeInfo.imageLinks.smallThumbnail}
+          bookCover={!book.volumeInfo.imageLinks ? '' : book.volumeInfo.imageLinks.smallThumbnail}
           title={book.volumeInfo.title}
           authors={book.volumeInfo.authors || []}
           summary={book.volumeInfo.description}
@@ -88,6 +94,7 @@ export class AddBookForm extends Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
+          {this.state.noBooksFound && <p>No Books Found</p>}
           {this.state.response && <Row>{possibleBooks}</Row>}
       </section>
     );

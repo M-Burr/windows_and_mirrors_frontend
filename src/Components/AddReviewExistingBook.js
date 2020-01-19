@@ -46,12 +46,16 @@ export class AddReviewExistingBook extends Component {
     }
     const addReviews=`/api/reviews_summary/${this.props.bookId}`
     axios.post(addReviews, reviewParams).then((response) => {
-      this.setState({response: response.data});
-      this.addReview(response.data);
+      this.setState({response: response.data}, () => {
+        this.props.addReview(response.data);
+        this.props.hideReviewForm();
+      });
+      
     }).catch((error) => {
-      this.setState({error: error.message});
+      this.setState({error: error.message}, () => {
+        this.props.hideReviewForm();
+      });
     })
-    this.props.hideReviewForm();
   }
 
 render(){

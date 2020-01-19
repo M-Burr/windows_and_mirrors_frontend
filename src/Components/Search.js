@@ -13,7 +13,8 @@ class Search extends Component {
       tags: [], 
       ages: [],
       response: [],
-      error: ''
+      error: '',
+      noBooksFound: false
     }
 
   }
@@ -64,9 +65,15 @@ class Search extends Component {
     const searchAges = this.state.ages.join(',')
     const completedsearch = '/api/complete-search'
     axios.get(completedsearch, {params: {identifier: searchIdentifiers, ages: searchAges}}).then((response) => {
-      this.setState({
-        response: response.data
-      });
+      if (response.data.length < 1){
+        this.setState({noBooksFound: true, response: []});
+
+      } else {
+        this.setState({
+          response: response.data,
+          noBooksFound: false
+        });
+      }
     })
     .catch((error) => {
       this.setState({error: error.message});
@@ -84,8 +91,10 @@ class Search extends Component {
       <p>Choose Ages: <Ages selected={this.state.ages} onAgesSelection={this.onAgesSelection} /> </p>
       <p>Please Choose Identifiers: 
         <Tags selected={this.state.tags} onSelection={this.onIdentifierSelection} /></p>
-      <Button variant="primary" onClick={this.onSearch}>Search</Button>
+        <Button variant="primary" onClick={this.onSearch}>Search</Button>
+        {this.state.noBooksFound && <p>No Books Found</p>}
       { this.state.response && filteredResults }
+
       </>
     );
   }

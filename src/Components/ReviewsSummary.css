@@ -1,0 +1,22 @@
+.reviews-summary-score-circle {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+}
+
+.reviews-summary-text {
+  font-size: 8pt;
+  top: 30px;
+  position: relative;
+  width: 75%;
+  font-weight: 600;
+}
+
+.reviews-summary-score-rating {
+  font-size: 1.3em;
+  display: block;
+  top: 25px;
+  position: relative;
+}

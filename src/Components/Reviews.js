@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Tabs, Tab} from 'react-bootstrap';
 import ReviewsSummary from './ReviewsSummary';
 import Review from './Review.js'
 import AddReviewExistingBook from './AddReviewExistingBook';
@@ -14,15 +14,15 @@ export class Reviews extends Component {
       praise: '',
       concern: '',
       discussion_topic: '',
-      response: null,
       reviews: [],
-      displayAddReview: false
+      displayAddReview: false,
+      averageReviewsByAccountType: {}
     }
   }
   componentDidMount(){
     const reviews = `/api/reviews_summary/${this.props.bookId}`
     axios.get(reviews).then((response) => {
-      this.setState({response: response.data, reviews: response.data.reviews})
+      this.setState({averageReviewsByAccountType: response.data.averageReviewsByAccountType, reviews: response.data.reviews})
     }).catch((error) => {
       this.setState({error: error.message})
     });
@@ -37,19 +37,51 @@ export class Reviews extends Component {
   }
 
   addReview = (review) => {
-    const reviews =  this.state.reviews
-    reviews.push(review)
-    this.setState({reviews: reviews});
+    const averageReviewsByAccountType = this.state.averageReviewsByAccountType
+    if (review.accountType === "general"){
+      const numReviews = this.getGeneralReviews().length
+      const oldSum = averageReviewsByAccountType.general * numReviews
+      const newAvg = (oldSum + review.rating) / (numReviews + 1)
+      averageReviewsByAccountType.general = newAvg
+    }else {
+      const numReviews = this.getEducatorReviews().length
+      const oldSum = averageReviewsByAccountType.educator * numReviews
+      const newAvg = (oldSum + review.rating) / (numReviews + 1)
+      averageReviewsByAccountType.educator = newAvg
+    }
+
+    const reviews =  this.state.reviews;
+    reviews.push(review);
+
+    this.setState({
+      reviews: reviews,
+      averageReviewsByAccountType: averageReviewsByAccountType
+    });
+  }
+
+  getEducatorReviews(){
+    const educatorReviews = this.state.reviews.filter((review)=>{
+      return review.accountType === "educator"
+    }).map((review)=> {
+      return (<Review review={review}/>)
+    });
+
+    return educatorReviews
+  }
+
+  getGeneralReviews(){
+    const generalReviews = this.state.reviews.filter((review)=>{
+      return review.accountType === "general"
+    }).map((review)=>{
+      return(<Review review={review} />) 
+    }) 
+    return generalReviews
   }
 
   render(){
     if (this.state.response === null) {
       return "...";
     }
-
-    const allreviews = this.state.reviews.map((review) => {
-      return (<Review review={review} />)
-    })
     return(
       <Row>
        <Col xs={3}>
@@ -64,10 +96,17 @@ export class Reviews extends Component {
             addReview={this.addReview}
           />
          }
+         <ReviewsSummary averageRatingByAccountType={this.state.averageReviewsByAccountType} />
        </Col>
        <Col xs={9}>
-        <ReviewsSummary averageRatingByAccountType={this.state.response.averageReviewsByAccountType} />
-        { allreviews }
+         <Tabs defaultActiveKey="Educator">
+           <Tab eventKey="Educator" title="Educator">
+             {this.getEducatorReviews()}
+           </Tab>
+           <Tab eventKey="General" title="General">
+             {this.getGeneralReviews()}
+           </Tab>
+         </Tabs>
        </Col>
       </Row>
     )
