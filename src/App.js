@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import Books from './Components/Books.js'
+import UserProfile from './Components/UserProfile.js'
 import BookDetails from './Components/BookDetails.js'
 import Authors from './Components/Authors.js'
 import Search from './Components/Search.js'
@@ -78,6 +79,9 @@ export class App extends Component {
            onFailure={this.responseGoogleFailure}
            cookiePolicy={'single_host_origin'}
            /> }
+           {user.email &&
+           <Link className="nav-link" to="/profile">PROFILE</Link>
+           }
            {user.email && 
            <GoogleLogout
            clientId="134231042819-ldje18ruml7mdidv2ca21946nputsmbu.apps.googleusercontent.com"
@@ -96,6 +100,7 @@ export class App extends Component {
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
             <Route path="/search"> <Search/> </Route>
+            <Route path="/profile"><UserProfile user={this.state.user}/></Route>
             <Route path="/">
               <Carousel>
                 <Carousel.Item className="carousel_picture">
