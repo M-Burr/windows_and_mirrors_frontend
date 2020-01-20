@@ -3,6 +3,7 @@ import axios from 'axios';
 import Book from './Book';
 import Reviews from './Reviews.js'
 import { Row, Col, Container } from 'react-bootstrap';
+import {Link} from 'react-router-dom'
 
 
 export class BookDetails extends Component {
@@ -32,8 +33,11 @@ render(){
     return null
   }
 
-  const authors = this.state.book.authors.map((author) => {
-    return <p>{author.name}</p>
+  const authors = this.state.book.authors.map((author, i) => {
+    return [
+      <Link to={`/authors/${author.id}`}>{author.name}</Link>,
+      i === this.state.book.authors.length - 1 ? '' : ', '
+    ]
 })
 
 const identifiers = this.state.book.tags.map((tag) => {

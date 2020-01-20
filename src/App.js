@@ -21,6 +21,7 @@ import './App.css';
 import Cookies from 'js-cookie'
 import {Navbar, Nav, Carousel} from 'react-bootstrap';
 import Axios from 'axios';
+import AuthorDetails from './Components/AuthorDetails';
 
 
 export class App extends Component {
@@ -96,6 +97,10 @@ export class App extends Component {
               path="/books/:id" 
               render={(props) => <BookDetails {...props} userId={this.state.user.id} />}
             />
+            <Route
+              path="/authors/:id"
+              component={AuthorDetails}
+             />
             <Route path="/add"> <SearchBookForm user={this.state.user}/> </Route>
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 

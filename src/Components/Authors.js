@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Row } from 'react-bootstrap';
+import { Row, Table } from 'react-bootstrap';
 import Author from './Author.js';
+import {Link} from 'react-router-dom'
 import axios from 'axios';
 
 class Authors extends Component {
@@ -32,13 +33,32 @@ class Authors extends Component {
   render () {
     let allAuthors = this.state.authorList.map((author, i) => {
       return (
-        <Author key={i} id={author.id} name={author.name} averageRating={author.avgRating}/>
+      <tr key={i}>
+        <td>
+          <Link to={`authors/${author.id}`}>{author.name}</Link>
+        </td>
+        <td>
+          {author.avgRating}
+        </td>
+      </tr>
       )
     })
     return (
-      <Row>
-        {allAuthors}
-      </Row>
+      <Table striped bordered>
+        <thead>
+          <tr>
+            <th>
+              Author Name
+            </th>
+            <th>
+              Author Rating
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {allAuthors}
+        </tbody>
+      </Table>
     )
   }
   
