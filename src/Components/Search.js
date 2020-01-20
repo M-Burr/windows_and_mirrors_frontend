@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Tags from './Tags.js';
 import Ages from './Ages.js';
-import { Button } from 'react-bootstrap';
+import { Button, Form, Row, Col, CardColumns, Container } from 'react-bootstrap';
 import axios from 'axios';
 import Book from './Book.js';
 
@@ -84,17 +84,32 @@ class Search extends Component {
     const filteredResults = this.state.response.map((book, i) => {
       return <Book key={i} id={book.id} title={book.title} authors={book.authors} bookCover={book.bookCover} tags={book.tags} genre={book.genre} isbn10={book.isbn10} isbn13={book.isbn13} startAge={book.startAge} endAge={book.endAge} startGrade={book.startGrade} endGrade={book.endGrade} summary={book.summary} />
     });
-
-    
     return(
       <>
-      <p>Choose Ages: <Ages selected={this.state.ages} onAgesSelection={this.onAgesSelection} /> </p>
+      <Container>
+        <div key="inline-checkbox" className="mb-3">
+          <h4>Choose Ages:</h4>
+          <Ages selected={this.state.ages} onAgesSelection={this.onAgesSelection} />
+        </div>
+        <div>
+          <h4>Please Choose Identifiers:</h4>
+          <Tags selected={this.state.tags} onSelection={this.onIdentifierSelection}/>
+          <Button variant="primary" onClick={this.onSearch}>Search</Button>
+        </div> 
+      </Container>
+      {this.state.noBooksFound && <p>No Books Found</p>}
+      <Container>
+        { 
+          this.state.response && 
+          <CardColumns>{filteredResults}</CardColumns>
+        }
+      </Container>
+      {/* <p>Choose Ages: <Ages selected={this.state.ages} onAgesSelection={this.onAgesSelection} /> </p>
       <p>Please Choose Identifiers: 
         <Tags selected={this.state.tags} onSelection={this.onIdentifierSelection} /></p>
         <Button variant="primary" onClick={this.onSearch}>Search</Button>
         {this.state.noBooksFound && <p>No Books Found</p>}
-      { this.state.response && filteredResults }
-
+      { this.state.response && filteredResults } */}
       </>
     );
   }

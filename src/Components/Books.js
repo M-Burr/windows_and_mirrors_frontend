@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import Book from './Book.js';
 import axios from 'axios';
-import { Row, Col } from 'react-bootstrap'
+import { CardDeck, CardColumns, Container } from 'react-bootstrap'
 
 class Books extends Component {
   constructor(props) {
@@ -34,9 +34,11 @@ class Books extends Component {
       )
     })
     return (
-      <Row>
-        {allBooks}
-      </Row>
+      <Container>
+        <CardColumns>
+          {allBooks}
+        </CardColumns>
+      </Container>
     )
   }
 }

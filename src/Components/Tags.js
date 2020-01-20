@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Tag from './Tag.js';
 import propTypes from 'prop-types'
 import axios from 'axios';
+import { Row } from 'react-bootstrap';
 
 class Tags extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class Tags extends Component {
       )
     })
     return (
-      <section> {allTags}</section>
+      <Row>{allTags}</Row>
     )
   }
 }

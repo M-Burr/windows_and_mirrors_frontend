@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types';
-import { Card, Form } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 
 export class Tag extends Component {
@@ -20,10 +20,16 @@ export class Tag extends Component {
 
   render(){
     return(
-      <span>
-        <input type="checkbox" onChange={this.onChange} checked={this.props.selected}/> 
-          {this.props.identifier}
-          </span>
+      <Col xs={4}>
+        <Form.Check
+          inline 
+          label={this.props.identifier} 
+          id={`inline-checkbox-${this.props.identifier}`} 
+          type="checkbox" 
+          onChange={this.onChange} 
+          checked={this.props.selected}
+        />
+      </Col>
       )
   }
 }

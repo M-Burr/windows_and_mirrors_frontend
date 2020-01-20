@@ -1,0 +1,7 @@
+.ages-list {
+  display: flex;
+}
+
+.age-check {
+  flex: 1;
+}

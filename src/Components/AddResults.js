@@ -25,10 +25,10 @@ export class AddResults extends Component {
       return author
     }).join(", ");
     return(
-      <Card style={{width: "15%"}}>
+      <Card border="dark">
+        <Card.Img variant="top" src={this.props.bookCover} />
         <Card.Body>
           <Card.Title> {this.props.title} </Card.Title>
-          <Card.Img variant="top" src={this.props.bookCover} />
           <Card.Text>By: {authors}</Card.Text>
           <Card.Text>Summary: {this.props.summary}</Card.Text>  
           <Button variant="primary" onClick={this.showReviewForm}>Add And Review This Book!</Button>

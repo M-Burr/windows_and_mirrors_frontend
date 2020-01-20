@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Row } from 'react-bootstrap'
+import { Row, Form, Button, Col, Container, CardColumns } from 'react-bootstrap'
 import AddResults from './AddResults.js';
 
 export class AddBookForm extends Component {
@@ -82,21 +82,19 @@ export class AddBookForm extends Component {
       );
     })
     return(
-      <section>
-        <form onSubmit={this.onSearchSubmit}>
-          <label>
-            Title:
-            <input type="text" value={this.state.title} onChange={this.titleChange} />
-          </label>
-          <label>
-            Author:
-            <input type="text" value={this.state.author} onChange={this.authorChange}/>
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-          {this.state.noBooksFound && <p>No Books Found</p>}
-          {this.state.response && <Row>{possibleBooks}</Row>}
-      </section>
+      <Container>
+        <Form onSubmit={this.onSearchSubmit}>
+        <Form.Group>
+          <Row>
+            <Col> <Form.Label>Search</Form.Label> </Col>
+            <Col sm={8}> <Form.Control type="search term" placeholder="Search by title, author, or keyword" value={this.state.tile} onChange={this.titleChange}/></Col>
+            <Col><Button variant="primary" type="submit">Search</Button></Col>
+          </Row>
+        </Form.Group>
+        </Form>
+        {this.state.noBooksFound && <p>No Books Found</p>}
+        {this.state.response && <CardColumns>{possibleBooks}</CardColumns>}
+      </Container>
     );
   }
 }

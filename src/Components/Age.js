@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types';
+import { Form, Badge } from 'react-bootstrap';
 
 export class Age extends Component {
   constructor(props){
@@ -17,10 +18,15 @@ export class Age extends Component {
 
   render(){
     return(
-      <span>
-        <input type="checkbox" onChange={this.onChange} ageChecked={this.props.selected}/>
-        {this.props.age}
-      </span>
+      <Form.Check 
+        className="age-check"
+        inline 
+        label={this.props.age} 
+        id={`inline-checkbox-${this.props.age}`} 
+        type="checkbox" 
+        onChange={this.onChange} 
+        ageChecked={this.props.selected}
+      />
     )
   }
   

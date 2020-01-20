@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Age from './Age.js';
 import propTypes from 'prop-types'
+import "./Ages.css";
 
 class Ages extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class Ages extends Component {
       )
     })
     return (
-      <section> {allAges}</section>
+      <div className="ages-list">{allAges}</div>
     )
   }
 

@@ -18,8 +18,7 @@ import diverse_classroom from './Components/Images/diverse_classroom.jpg'
 import children_reading from './Components/Images/children_reading.jpg'
 import './App.css';
 import Cookies from 'js-cookie'
-import {Navbar} from 'react-bootstrap';
-import { Carousel } from 'react-bootstrap'
+import {Navbar, Nav, Carousel} from 'react-bootstrap';
 import Axios from 'axios';
 
 
@@ -62,12 +61,16 @@ export class App extends Component {
     const user = this.state.user
     return (
       <Router>
-        <Navbar expand="lg">
-          <Navbar.Brand className="spacing">
-          <Link to="/"> HOME </Link>
-          <Link to="/books">BOOKS</Link>
-           <Link to="/authors">AUTHORS</Link>
-           <Link to="/search">SEARCH</Link>
+        <Navbar>
+          <Navbar.Brand> <Link className="nav-link" to="/"> Windows and Mirrors </Link>
+          </Navbar.Brand>
+          <Nav className="mr-auto">
+          
+          <Link className="nav-link" to="/books">BOOKS</Link>
+           <Link className="nav-link" to="/authors">AUTHORS</Link>
+           <Link className="nav-link" to="/search">SEARCH</Link>
+           {user.email && <Link className="nav-link" to="/add">ADD BOOK</Link>}
+           </Nav>
            {!user.email && <GoogleLogin 
            clientId="134231042819-ldje18ruml7mdidv2ca21946nputsmbu.apps.googleusercontent.com"
            buttonText="Login"
@@ -75,7 +78,6 @@ export class App extends Component {
            onFailure={this.responseGoogleFailure}
            cookiePolicy={'single_host_origin'}
            /> }
-           {user.email && <Link to="/add">ADD BOOK</Link>}
            {user.email && 
            <GoogleLogout
            clientId="134231042819-ldje18ruml7mdidv2ca21946nputsmbu.apps.googleusercontent.com"
@@ -83,9 +85,8 @@ export class App extends Component {
            onLogoutSuccess={this.logout}>
          </GoogleLogout>
            }
-          </Navbar.Brand>
         </Navbar>
-        <section>
+        <div>
           <Switch>
             <Route 
               path="/books/:id" 
@@ -119,7 +120,7 @@ export class App extends Component {
               </Carousel>
             </Route>
           </Switch>
-        </section>
+          </div>
       </Router>
     );
   }

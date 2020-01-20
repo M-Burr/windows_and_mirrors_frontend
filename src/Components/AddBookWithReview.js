@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AddResults from './AddResults.js';
 import Tags from './Tags.js'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Form } from 'react-bootstrap'
 import axios from 'axios'
 
 export class AddBookWithReview extends Component {
@@ -16,7 +16,6 @@ export class AddBookWithReview extends Component {
       isbn10: this.props.isbn10,
       isbn13: this.props.isbn13,
       summary: this.props.summary,
-      maturityRating: this.props.maturityRating,
       tags: [],
       genre: '',
       startAge: 0,
@@ -126,18 +125,21 @@ export class AddBookWithReview extends Component {
     return(
         <>
         <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
+          <Modal.Header size="lg" closeButton>
             <Modal.Title>Review Needed to Add a Book</Modal.Title>
           </Modal.Header>
           <Modal.Body>
               <h4>{this.state.title}</h4>
-              <form>
-                <label>Genre: <input type="text" value={this.state.genre} onChange={this.genreChange} /></label>
-                <label>Praise: <input type="text" value={this.state.praise} onChange={this.praiseChange} /></label>
-                <label>Concerns: <input type="text" value={this.state.concern} onChange={this.concernChange} /></label>
-                <label>Related Classroom Discussions: <input type="text" value={this.state.discussion_topic} onChange={this.discussionChange} /></label>
-                Tags:<Tags selected={this.state.tags} onSelection={this.onTagSelection} />
-                Appropriate for - starting age (in years):<select value={this.state.startAge} onChange={this.startAgeChange}>
+                <Form.Group>
+                  <Form.Control  type="genre" placeholder="Enter book genre" value={this.state.genre} onChange={this.genreChange} />
+                  <Form.Control type="praise" placeholder="Positive Aspects of this Book" value={this.state.praise} onChange={this.praiseChange} />
+                  <Form.Control type="concerns" placeholder="List Any Concerning Aspects About This Book" value={this.state.concerns} onChange={this.concernChange} />
+                  <Form.Control type="discussionTopics" placeholder="Relevant Discussion Topics after Reading This Book" value={this.state.discussion_topic} onChange={this.discussionChange} />                  
+                </Form.Group>
+                <h4>Tags</h4>
+                <Tags selected={this.state.tags} onSelection={this.onTagSelection} />
+                <Form.Label>Appropriate for - starting age (in years):</Form.Label>
+                <Form.Control as="select" value={this.state.startAge} onChange={this.startAgeChange}>
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -151,8 +153,9 @@ export class AddBookWithReview extends Component {
                   <option value="10">10</option>
                   <option value="11">11</option>
                   <option value="12">12</option>
-                </select>
-                Appropriate for - ending age (in years): <select value={this.state.endAge} onChange={this.endAgeChange}>
+                </Form.Control>
+                <Form.Label>Appropriate for - ending age (in years):</Form.Label>
+                <Form.Control as="select" value={this.state.endAge} onChange={this.endAgeChange}>
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -166,8 +169,9 @@ export class AddBookWithReview extends Component {
                   <option value="10">10</option>
                   <option value="11">11</option>
                   <option value="12">12</option>
-                </select>
-                Appropriate for - starting Grade: <select value={this.state.startGrade} onChange={this.startGradeChange}>
+                </Form.Control>
+                <Form.Label>Appropriate for - starting Grade:</Form.Label>
+                <Form.Control as="select" value={this.state.startGrade} onChange={this.startGradeChange}>
                   <option value="0">Toddlerhood</option>
                   <option value="1">Preschool</option>
                   <option value="2">Kindergarten</option>
@@ -183,8 +187,9 @@ export class AddBookWithReview extends Component {
                   <option value="12">10th</option>
                   <option value="13">11th</option>
                   <option value="14">12th</option>
-                </select>
-                Appropriate for - ending Grade: <select value={this.state.endGrade} onChange={this.endGradeChange}>
+                </Form.Control>
+                <Form.Label>Appropriate for - ending Grade:</Form.Label>
+                <Form.Control as="select" value={this.state.endGrade} onChange={this.endGradeChange}>
                   <option value="0">Toddlerhood</option>
                   <option value="1">Preschool</option>
                   <option value="2">Kindergarten</option>
@@ -200,16 +205,16 @@ export class AddBookWithReview extends Component {
                   <option value="12">10th</option>
                   <option value="13">11th</option>
                   <option value="14">12th</option>
-                </select>
-                Please Rating This Book: <select value={this.state.rating} onChange={this.ratingChange}>
+                </Form.Control>
+                <Form.Label>Please Rating This Book:</Form.Label>
+                <Form.Control as="select" value={this.state.rating} onChange={this.ratingChange}>
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
-                </select>
-              </form>
+                </Form.Control>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>Close</Button>
