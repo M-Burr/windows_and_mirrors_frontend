@@ -15,13 +15,16 @@ import BookDetails from './Components/BookDetails.js'
 import Authors from './Components/Authors.js'
 import Search from './Components/Search.js'
 import SearchBookForm from './Components/SearchBookForm'
-import diverse_classroom from './Components/Images/diverse_classroom.jpg'
-import children_reading from './Components/Images/children_reading.jpg'
+import EarlyReader from './images/EarlyReader.jpg'
+import FamilyReadingFun from './images/FamilyReadingFun.jpg'
+import SuperMom from './images/SuperMom.jpg'
+import TeacherReading from './images/TeacherReading.jpg'
 import './App.css';
 import Cookies from 'js-cookie'
-import {Navbar, Nav, Carousel} from 'react-bootstrap';
+import {Navbar, Nav, Carousel, Container} from 'react-bootstrap';
 import Axios from 'axios';
 import AuthorDetails from './Components/AuthorDetails';
+import About from './Components/About.js'
 
 
 export class App extends Component {
@@ -67,7 +70,7 @@ export class App extends Component {
           <Navbar.Brand> <Link className="nav-link" to="/"> Windows and Mirrors </Link>
           </Navbar.Brand>
           <Nav className="mr-auto">
-          
+          <Link className="nav-link" to="/about">ABOUT</Link>
           <Link className="nav-link" to="/books">BOOKS</Link>
            <Link className="nav-link" to="/authors">AUTHORS</Link>
            <Link className="nav-link" to="/search">SEARCH</Link>
@@ -106,26 +109,32 @@ export class App extends Component {
             <Route path="/authors"> <Authors/> </Route> 
             <Route path="/search" component={Search} />
             <Route path="/profile"><UserProfile user={this.state.user}/></Route>
+            <Route path="/about"><About /></Route>
             <Route path="/">
               <Carousel>
-                <Carousel.Item className="carousel_picture">
+                <Carousel.Item>
                   <img className="d-block w-100"
-                  src={diverse_classroom}
-                  alt="Windows and Mirrors" 
+                  src={TeacherReading}
+                  alt="A teacher is reading to her students" 
                   />
-                  <Carousel.Caption>
-                    <h1>Windows and Mirrors</h1>
-                  </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item className="carousel_picture">
+                <Carousel.Item>
                   <img className="d-block w-100"
-                  src={children_reading}
-                  alt="children reading books"
+                  src={EarlyReader}
+                  alt="Two parents are reading to their toddler"
                   />
-                  <Carousel.Caption>
-                    <h3>Children Read!</h3>
-                    <p> more more more!</p>
-                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img className="d-block w-100"
+                  src={FamilyReadingFun}
+                  alt="Two parents are reading to their young child"
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img className="d-block w-100"
+                  src={SuperMom}
+                  alt="A mom and her daughter are dressed like Superwoman and reading a book together"
+                  />
                 </Carousel.Item>
               </Carousel>
             </Route>
