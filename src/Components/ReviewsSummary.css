@@ -1,8 +1,9 @@
 .reviews-summary-score-circle {
-  border-radius: 50%;
-  height: 100px;
-  width: 100px;
-  margin: 10px;
+  border-radius: 70%;
+  height: 120px;
+  width: 120px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   text-align: center;
 }
 

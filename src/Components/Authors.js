@@ -38,7 +38,7 @@ class Authors extends Component {
           <Link to={`authors/${author.id}`}>{author.name}</Link>
         </td>
         <td>
-          {author.avgRating}
+          {Math.round(author.avgRating * 100) / 100}
         </td>
       </tr>
       )

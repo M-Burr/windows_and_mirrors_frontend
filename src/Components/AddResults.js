@@ -29,9 +29,9 @@ export class AddResults extends Component {
         <Card.Img variant="top" src={this.props.bookCover} />
         <Card.Body>
           <Card.Title> {this.props.title} </Card.Title>
-          <Card.Text>By: {authors}</Card.Text>
-          <Card.Text>Summary: {this.props.summary}</Card.Text>  
+          <Card.Text><strong>By: </strong>{authors}</Card.Text>
           <Button variant="primary" onClick={this.showReviewForm}>Add And Review This Book!</Button>
+          <Card.Text style={{marginTop: 15}}><strong>Summary: </strong>{this.props.summary}</Card.Text>  
           {this.state.displayForm === true && <AddBookWithReview 
           title={this.props.title} 
           authors={this.props.authors} 

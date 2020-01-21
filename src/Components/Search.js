@@ -4,6 +4,7 @@ import Ages from './Ages.js';
 import { Button, Form, Row, Col, CardColumns, Container } from 'react-bootstrap';
 import axios from 'axios';
 import Book from './Book.js';
+import queryString from 'query-string'
 
 class Search extends Component {
   constructor(props){
@@ -58,6 +59,14 @@ class Search extends Component {
     }
   }
 
+  componentDidMount() {
+    const values = queryString.parse(this.props.location.search, {arrayFormat: 'comma'})
+    if (values.identifiers){
+    const identifiers = Array.isArray(values.identifiers) ? values.identifiers : Array.of(values.identifiers)
+    this.setState({
+      tags: identifiers.map(tag => tag.toLowerCase())
+    }, this.onSearch)}
+  }
 
   onSearch = () => {
     //send QP to back end
@@ -104,12 +113,6 @@ class Search extends Component {
           <CardColumns>{filteredResults}</CardColumns>
         }
       </Container>
-      {/* <p>Choose Ages: <Ages selected={this.state.ages} onAgesSelection={this.onAgesSelection} /> </p>
-      <p>Please Choose Identifiers: 
-        <Tags selected={this.state.tags} onSelection={this.onIdentifierSelection} /></p>
-        <Button variant="primary" onClick={this.onSearch}>Search</Button>
-        {this.state.noBooksFound && <p>No Books Found</p>}
-      { this.state.response && filteredResults } */}
       </>
     );
   }

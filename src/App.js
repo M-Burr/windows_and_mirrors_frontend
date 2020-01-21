@@ -104,7 +104,7 @@ export class App extends Component {
             <Route path="/add"> <SearchBookForm user={this.state.user}/> </Route>
             <Route path="/books"> <Books/> </Route>
             <Route path="/authors"> <Authors/> </Route> 
-            <Route path="/search"> <Search/> </Route>
+            <Route path="/search" component={Search} />
             <Route path="/profile"><UserProfile user={this.state.user}/></Route>
             <Route path="/">
               <Carousel>

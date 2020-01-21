@@ -101,9 +101,11 @@ export class Reviews extends Component {
        <Col xs={9}>
          <Tabs defaultActiveKey="Educator">
            <Tab eventKey="Educator" title="Educator">
+             <br />
              {this.getEducatorReviews()}
            </Tab>
            <Tab eventKey="General" title="General">
+              <br />
              {this.getGeneralReviews()}
            </Tab>
          </Tabs>

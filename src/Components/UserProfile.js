@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Col, Row } from 'react-bootstrap'
+import { Container, Col, Row, Button, Badge } from 'react-bootstrap'
+import profile from '../profile.png';
+import "./UserProfile.css";
 
 export class UserProfile extends Component {
   constructor(props){
@@ -9,16 +11,29 @@ export class UserProfile extends Component {
       user: this.props.user
     }
   }
+
+  renderAccountType() {
+    if (this.state.user.accountType === 'educator') {
+      return <Badge variant="info">Educator</Badge>
+    } else {
+      return <Button variant="primary">Request Educator Status </Button> ;
+    }
+  }
+
   render(){
     return(
-      <Container>
+      <Container className="profile">
         <Row>
+          <Col xs={3}>
+            <img src={profile} className="profile-picture" />
+          </Col>
           <Col>
-            <h5>User Profile</h5>
-            <h6>{this.state.user.name}</h6>
+            <h5>{this.state.user.name}</h5>
             <p> {this.state.user.email} </p>
-            <p>  {this.state.user.accountType}</p>
-            <p>Request Educator Status </p>  
+            <div>
+            {this.renderAccountType()}
+            </div>
+            
           </Col>
         </Row>
 

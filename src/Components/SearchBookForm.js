@@ -86,9 +86,8 @@ export class AddBookForm extends Component {
         <Form onSubmit={this.onSearchSubmit}>
         <Form.Group>
           <Row>
-            <Col> <Form.Label>Search</Form.Label> </Col>
-            <Col sm={8}> <Form.Control type="search term" placeholder="Search by title, author, or keyword" value={this.state.tile} onChange={this.titleChange}/></Col>
-            <Col><Button variant="primary" type="submit">Search</Button></Col>
+            <Col><Form.Control type="search term" placeholder="Search by title, author, or keyword" value={this.state.tile} onChange={this.titleChange}/></Col>
+            <Col xs="auto"><Button variant="primary" type="submit">Search</Button></Col>
           </Row>
         </Form.Group>
         </Form>

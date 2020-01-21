@@ -8,7 +8,7 @@ export class Review extends Component {
     return(
       <Row>
         <Col>
-          <Table bordered>
+          <Table bordered size="sm">
             <tbody>
             <tr><th>Name</th><td style={{width:"100%"}}>{this.props.review.userName}</td></tr>
             <tr><th>Rating</th><td>{this.props.review.rating}</td></tr>

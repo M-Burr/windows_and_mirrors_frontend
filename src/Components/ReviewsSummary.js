@@ -4,32 +4,30 @@ import './ReviewsSummary.css';
 
 class ReviewNumber extends Component {
   render() {
-    const rating = this.props.rating || "Not Yet Rated";
+
+    const rating = this.props.rating 
+    const rounding = Math.round(rating * 100) / 100
+
+    const roundedRating = rounding || "Not Yet Rated";
 
     return (
       <div class="reviews-summary-score-circle" style={{ backgroundColor: this.props.color }}>
         <span class="reviews-summary-text">{this.props.accountTypeName} Rating:</span>
-        <span class="reviews-summary-score-rating">{rating}</span>
+        <span class={rounding ? "reviews-summary-score-rating" : "reviews-summary-text" }>
+          {roundedRating}
+        </span>
       </div>
     );
   }
 }
 
 export class ReviewsSummary extends Component {
-  // formatedRating(accountType){
-  //   const rating = this.props.averageRatingByAccountType[accountType]
-  //   if (rating){
-  //     return <strong>{rating}</strong>
-  //   } else {
-  //     return <i>Not Yet Rated</i>
-  //   }
-  // }
   
   render(){
     return(
     <>
-      <ReviewNumber accountTypeName="Educator" rating={this.props.averageRatingByAccountType.educator} color="#00ff00" />
-      <ReviewNumber accountTypeName="General" rating={this.props.averageRatingByAccountType.general} color="#ffff00" />
+      <ReviewNumber accountTypeName="Educator" rating={this.props.averageRatingByAccountType.educator} color="#68B0AB" />
+      <ReviewNumber accountTypeName="General" rating={this.props.averageRatingByAccountType.general} color="#C0D6DF" />
     </>
     );
   }

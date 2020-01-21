@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types'
-import {Modal, Button} from 'react-bootstrap'
+import {Modal, Button, Form} from 'react-bootstrap'
 import axios from 'axios';
 
 export class AddReviewExistingBook extends Component {
@@ -65,25 +65,28 @@ render(){
       <Modal.Title>Review {this.props.bookTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
-          <label>
-            Praise: <input type="text" value={this.state.praise}  onChange={this.onPraiseChange}/>
-            </label>
-          <label>
-            Concern(s): <input type="text" value={this.state.concern} onChange={this.onConcernChange} />
-          </label>
-          <label>
-            Discussion Topics: <input type="text" value={this.state.discussionTopics} onChange={this.onDiscussionChange} />
-          </label>
-          Rating:<select value={this.state.ratings} onChange={this.onRatingChange}>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </form>
+        <Form>
+          <Form.Group>
+          <Form.Control placeholder="Enter Praise..." value={this.state.praise} onChange={this.onPraiseChange}/>
+          </Form.Group>
+          <Form.Group>
+          <Form.Control placeholder="Enter Concerns..."value={this.state.concern} onChange={this.onConcernChange}  />
+          </Form.Group>
+          <Form.Group>
+          <Form.Control placeholder="Enter Discussion Topics for this Book" value={this.state.discussionTopics} onChange={this.onDiscussionChange}/>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Rating: </Form.Label>
+            <Form.Control as="select" value={this.state.ratings} onChange={this.onRatingChange}>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </Form.Control>
+          </Form.Group>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={this.props.hideReviewForm}>Close</Button>
