@@ -10,16 +10,16 @@ export class About extends Component {
           <h4>ABOUT</h4>
           <p>
           Windows and Mirrors is a project dedicated to helping educators, families, and children easily find books with both reflect their life experiences and
-          provide different perspectives. The name of this website - Windows and Mirrors - was inspired by the work done by Emily Styles of the Seeking 
+          provide a different perspective. The name of this website - Windows and Mirrors - was inspired by the work done by <a href="https://nationalseedproject.org/SEED-Directors-and-Year-Round-Staff/emily-style">Emily Styles</a> of the Seeking 
           Educational Equity and Diversity (SEED) Project. 
           </p>
           <p>
           Emily contends that various mediums (e.g., books, movies, music, illustrations, etc.) provide children the opportunity to get a glimpse into a 
           new or different culture/life experience. Windows also help children build empathy and understanding for those who have a different 
           perspective or life experience. Alternatively, Mirrors are mediums (e.g., books, movies, music, illustrations, etc.) that reflect one’s own 
-          life experience, culture, and identity. Mirrors are important for validating one’s own life experiences and allow readers to feel that their 
+          life experience, culture, and identity. Mirrors are important for validating one’s own life experiences and allowing readers to feel that their 
           own experiences are not isolated or “strange.” Mirrors are also a way for children to feel connected to their experience, culture, and 
-          identity with others. 
+          identity, with others. 
           </p>
           <p>
           Both windows and mirrors are important for validating children as they are and expanding children’s views on people and experiences that 
@@ -31,7 +31,7 @@ export class About extends Component {
           <p>
           There is a wide diversity gap in children’s literature and publishing. In addition, children’s book that feature diverse perspects are often 
           written by people who do not identify with the experience or culture they are writing about - which can contribute to problematic themes and 
-          depictions in children’s book when diverse perspectives are shown. Literacy researcher, Dr. Ebony Elizabeth Thomas, from the 
+          depictions in children’s book when diverse perspectives are shown. Literacy researcher, <a href="https://www.gse.upenn.edu/academics/faculty-directory/thomas">Dr. Ebony Elizabeth Thomas</a>, from the 
           University of Pennsylvania, has described this discrepancy as “ a distorted funhouse mirrors of self.” 
           </p>
           <p>
@@ -48,11 +48,11 @@ export class About extends Component {
           <p>
           LGBTQIA+ and Non-binary representation was not tracked in 2015, nor in 2018. Although slow progress is being made towards improved representation 
           (both in quantity and quality), children’s book overall continue to ignore diverse perspectives or showcase them in authentic or meaningful ways. 
-          This presents additional time challenges and burdens  for  educators and parents to find appropriate and meaningful books to share with their 
+          This presents additional time challenges and burdens on educators and parents to find appropriate and meaningful books to share with their 
           students and children.
           </p>
           <p>
-          It is our hope that Windows and Mirrors will lesson the burden by making it easy to find diverse children’s books and also be altered to any 
+          It is our hope that Windows and Mirrors will lesson the burden by making it easy to find diverse children’s books and also be alerted to any 
           concerning or problematic themes presented in these books. 
           </p>
           <br/>

@@ -49,10 +49,12 @@ class AuthorDetails extends Component{
         
       )
     })
+
+    const displayRating = (this.state.authorRating * 100) / 100
     return(
       <div>
       <h2>{this.state.authorName}</h2>
-      <h4>Average Rating: {this.state.authorRating}</h4>
+      <h4>Average Rating: {Math.round(displayRating)}</h4>
       <h5>Topics Covered: {topics}</h5>
       <Table>
         <thead>
